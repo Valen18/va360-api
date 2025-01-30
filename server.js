@@ -58,19 +58,19 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
     }
 
     try {
-      // Verificar si el afiliado existe
-      const { data: affiliateData, error: affiliateError } = await supabase
-        .from('affiliates')
+      // Verificar si el usuario existe en telegram_users
+      const { data: userData, error: userError } = await supabase
+        .from('telegram_users')
         .select('id')
         .eq('id', affiliateId)
         .single();
 
-      if (affiliateError || !affiliateData) {
-        console.error('Afiliado no encontrado:', affiliateId);
-        return res.status(400).json({ error: 'Afiliado no encontrado' });
+      if (userError || !userData) {
+        console.error('Usuario de Telegram no encontrado:', affiliateId);
+        return res.status(400).json({ error: 'Usuario no encontrado' });
       }
 
-      console.log('Afiliado encontrado:', affiliateData);
+      console.log('Usuario encontrado:', userData);
       
       // Registrar la venta
       const { data: saleData, error: saleError } = await supabase
