@@ -74,18 +74,18 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (req, res) =
       
       // Registrar la venta
       const { data: saleData, error: saleError } = await supabase
-        .from('affiliate_sales')
-        .insert([
-          {
-            affiliate_id: affiliateId,
-            amount: session.amount_total / 100,
-            customer_email: session.customer_details.email,
-            sale_date: new Date().toISOString(),
-            subscription_id: session.subscription,
-            payment_status: session.payment_status
-          }
-        ])
-        .select();
+      .from('affiliate_sales')
+      .insert([
+        {
+          affiliate_id: affiliateId,
+          amount: session.amount_total / 100,
+          customer_email: session.customer_details.email,
+          sale_date: new Date().toISOString(),
+          subscription_id: session.subscription,
+          payment_status: session.payment_status
+        }
+      ])
+      .select();
 
       if (saleError) {
         console.error('Error al registrar la venta:', saleError);
